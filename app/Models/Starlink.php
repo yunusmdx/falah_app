@@ -16,6 +16,7 @@ class Starlink extends Model
         'email',
         'note',
         'division',
+        'mikrotik',
     ];
 
     public function payments()

@@ -10,6 +10,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Support\HtmlString;
 
 class BastsTable
 {
@@ -73,6 +74,7 @@ class BastsTable
 
             ])
 
+            
 
             // ->recordActions([
             //     Action::make('cetak')
@@ -85,20 +87,52 @@ class BastsTable
 
             ->recordActions([
 
-                Action::make('print')
-                    ->label('')
-                    ->icon(Heroicon::OutlinedPrinter)
-                    ->tooltip('Print')
+            Action::make('print')
+                    ->icon('heroicon-o-printer')
                     ->color('success')
                     ->iconButton()
-                    ->url(fn ($record) => route('bast.pdf', ['bast' => $record->id]))
-                    ->openUrlInNewTab(),
+                    ->modalHeading('Print Preview')
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Tutup')
 
-                Action::make('download')
-                    ->icon(Heroicon::ArrowDownTray)
-                    ->iconButton()
-                    ->tooltip('Download')
-                    ->url(fn ($record) => route('bast.pdf', $record).'?download=1'),
+                    ->modalContent(fn ($record) => new HtmlString("
+                    
+                        <iframe
+                            src='" . route('bast.print', $record->id) . "'
+                            width='100%'
+                            height='600px'
+                            id='print-frame'
+                            style='border:none;'>
+                        </iframe>
+
+                        <script>
+                        setTimeout(function(){
+
+                            let iframe = document.getElementById('print-frame');
+
+                            iframe.contentWindow.focus();
+
+                            iframe.contentWindow.print();
+
+                        }, 1000);
+                        </script>
+
+                    ")),
+
+                // Action::make('print')
+                //     ->label('')
+                //     ->icon(Heroicon::OutlinedPrinter)
+                //     ->tooltip('Print')
+                //     ->color('success')
+                //     ->iconButton()
+                //     ->url(fn ($record) => route('bast.pdf', ['bast' => $record->id]))
+                //     ->openUrlInNewTab(),
+
+                // Action::make('download')
+                //     ->icon(Heroicon::ArrowDownTray)
+                //     ->iconButton()
+                //     ->tooltip('Download')
+                //     ->url(fn ($record) => route('bast.pdf', $record).'?download=1'),
             
                 EditAction::make()
                     ->iconButton()

@@ -1,27 +1,41 @@
+bast.blade.php
+
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
+
+<title>BAST</title>
 
 <style>
 
-body{
-    font-family: DejaVu Sans;
-    font-size:12px;
-    line-height:1.6;
-    margin:30px;
-    color:#000;
+@page {
+    size: A4;
+    margin: 25mm;
 }
 
+body{
+    font-family: "Times New Roman", serif;
+    font-size: 12pt;
+    line-height: 1.6;
+    color: #000;
+}
+
+/* HEADER */
+
 .header{
+    width:100%;
     border-bottom:3px solid #000;
     padding-bottom:10px;
-    margin-bottom:20px;
+    margin-bottom:30px;
+}
+
+.header-table{
+    width:100%;
 }
 
 .logo{
-    float:left;
-    width:80px;
+    width:90px;
 }
 
 .company{
@@ -29,156 +43,229 @@ body{
 }
 
 .company-name{
-    font-size:18px;
+    font-size:18pt;
     font-weight:bold;
 }
 
 .company-address{
-    font-size:11px;
+    font-size:11pt;
 }
 
-.clear{
-    clear:both;
-}
+/* TITLE */
 
 .title{
     text-align:center;
-    font-size:18px;
-    font-weight:bold;
     margin-top:30px;
+    margin-bottom:30px;
 }
 
-.subtitle{
+.title h1{
+    font-size:16pt;
+    margin:0;
+}
+
+.title h2{
+    font-size:13pt;
+    margin:0;
+}
+
+/* CONTENT */
+
+.row{
+    margin-bottom:10px;
+}
+
+.flex{
+    display:flex;
+    justify-content:space-between;
+}
+
+.justify{
+    text-align:justify;
+}
+
+/* SIGNATURE */
+
+.signature{
+    margin-top:80px;
+    width:100%;
+}
+
+.signature td{
     text-align:center;
-    font-size:14px;
+}
+
+/* FOOTER */
+
+.footer{
+    position:fixed;
+    bottom:10mm;
+    width:100%;
+    text-align:center;
+    font-size:10pt;
+}
+
+/* PAGE BREAK */
+
+.page-break{
+    page-break-before:always;
+}
+
+/* LAMPIRAN */
+
+.lampiran-title{
+    text-align:center;
+    font-size:16pt;
+    font-weight:bold;
     margin-bottom:20px;
 }
+
+/* TABLE */
 
 table{
     width:100%;
     border-collapse:collapse;
 }
 
-td{
-    padding:6px;
-    vertical-align:top;
-}
-
-.border{
+th, td{
     border:1px solid black;
+    padding:8px;
 }
 
-.center{
-    text-align:center;
-}
-
-.right{
-    text-align:right;
-}
-
-.signature{
-    margin-top:60px;
-}
-
-.signature-box{
-
-    height:90px;
-
-}
-
-.page-break{
-    page-break-after:always;
-}
-
-.footer{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    font-size:10px;
-    text-align:center;
-}
-
-.qr{
-    position:absolute;
-    right:30px;
-    top:30px;
-}
-
-.watermark{
-    position:fixed;
-    top:35%;
-    left:25%;
-    opacity:0.08;
-    font-size:80px;
-    transform:rotate(-30deg);
+th{
+    background:#eee;
 }
 
 </style>
 
 </head>
 
+
 <body>
 
 
-{{-- HEADER --}}
+{{-- ============================= --}}
+{{-- HALAMAN 1 --}}
+{{-- ============================= --}}
+
 <div class="header">
 
-    <img src="{{ public_path('logo.png') }}" class="logo">
+<table class="header-table">
 
-    <div class="company">
+<tr>
 
-        <div class="company-name">
-            PT. FALAH TECH GLOBAL
-        </div>
+<td width="15%">
+<img src="{{ public_path('logo.png') }}" class="logo">
+</td>
 
-        <div class="company-address">
-            Jakarta, Indonesia
-            <br>
-            www.falahtechglobal.com
-        </div>
+<td class="company">
 
-    </div>
+<div class="company-name">
 
-<div class="clear"></div>
+PT. FALAH TECH GLOBAL
+
+</div>
+
+<div class="company-address">
+
+Jakarta, Indonesia<br>
+www.falahtechglobal.com
+
+</div>
+
+</td>
+
+<td width="15%" align="right">
+
+<img src="{{ public_path('qr.png') }}" width="80">
+
+</td>
+
+</tr>
+
+</table>
 
 </div>
 
 
-{{-- QR --}}
-<div class="qr">
-
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data={{ $bast->no_bast }}">
-
-</div>
-
-
-
-{{-- TITLE --}}
 <div class="title">
 
+<h1>
 BERITA ACARA SERAH TERIMA
+</h1>
 
-</div>
-
-<div class="subtitle">
-
+<h2>
 PERANGKAT STARLINK
+</h2>
 
 </div>
 
+
+<div class="flex">
+
+<div>
+Nomor : {{ $bast->no_bast }}
+</div>
+
+<div>
+Tanggal :
+{{ $bast->tanggal->translatedFormat('d F Y') }}
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="justify">
+
+Pada hari ini tanggal
+
+<b>{{ $bast->tanggal->translatedFormat('d F Y') }}</b>
+
+telah dilakukan serah terima perangkat Starlink
+dengan rincian sebagai berikut:
+
+</div>
+
+
+<br><br>
 
 
 <table>
 
 <tr>
 
-<td width="70%">
-Nomor : {{ $bast->no_bast }}
+<td width="50%">
+
+<b>Pihak Pertama</b><br><br>
+
+Nama :
+{{ $bast->pihak_pertama_nama }}<br>
+
+Jabatan :
+{{ $bast->pihak_pertama_jabatan }}<br>
+
+Perusahaan :
+{{ $bast->pihak_pertama_perusahaan }}
+
 </td>
 
-<td class="right">
-Tanggal : {{ $bast->tanggal->translatedFormat('d F Y') }}
+
+<td>
+
+<b>Pihak Kedua</b><br><br>
+
+Nama :
+{{ $bast->pihak_kedua_nama }}<br>
+
+Jabatan :
+{{ $bast->pihak_kedua_jabatan }}<br>
+
+Perusahaan :
+{{ $bast->pihak_kedua_perusahaan }}
+
 </td>
 
 </tr>
@@ -186,45 +273,27 @@ Tanggal : {{ $bast->tanggal->translatedFormat('d F Y') }}
 </table>
 
 
-
 <br><br>
 
 
-Pada hari ini tanggal
-<b>{{ $bast->tanggal->translatedFormat('d F Y') }}</b>
-telah dilakukan serah terima perangkat Starlink.
+<div class="justify">
+
+Demikian berita acara ini dibuat dengan sebenarnya
+untuk dipergunakan sebagaimana mestinya.
+
+</div>
 
 
 
-<br><br><br>
-
-
-
-{{-- SIGNATURE --}}
 <table class="signature">
 
 <tr>
 
+<td>
 
-{{-- PIHAK PERTAMA --}}
-<td width="50%" class="center">
+Pihak Pertama
 
-Penyedia
-<br>
-
-PT. FALAH TECH GLOBAL
-
-<br><br>
-
-<div class="signature-box">
-
-@if(file_exists(public_path('ttd.png')))
-<img src="{{ public_path('ttd.png') }}" height="80">
-@endif
-
-</div>
-
-<br>
+<br><br><br><br><br>
 
 <b>
 {{ $bast->pihak_pertama_nama }}
@@ -237,26 +306,11 @@ PT. FALAH TECH GLOBAL
 </td>
 
 
+<td>
 
+Pihak Kedua
 
-{{-- PIHAK KEDUA --}}
-<td width="50%" class="center">
-
-Penerima
-
-<br>
-
-{{ $bast->pihak_kedua_perusahaan }}
-
-<br><br>
-
-
-<div class="signature-box">
-{{-- kosong tapi size sama --}}
-&nbsp;
-</div>
-
-<br>
+<br><br><br><br><br>
 
 <b>
 {{ $bast->pihak_kedua_nama }}
@@ -268,78 +322,75 @@ Penerima
 
 </td>
 
-
-
 </tr>
 
 </table>
 
 
-
 <div class="footer">
 
-Dokumen ini dibuat otomatis oleh Sistem BAST
+Dokumen ini dihasilkan oleh Sistem BAST
 
 </div>
 
+
+{{-- ============================= --}}
+{{-- HALAMAN 2 --}}
+{{-- ============================= --}}
 
 
 <div class="page-break"></div>
 
 
 
-{{-- LAMPIRAN --}}
-<div class="title">
+<div class="lampiran-title">
 
-LAMPIRAN PERANGKAT STARLINK
+LAMPIRAN<br>
+DETAIL PERANGKAT STARLINK
 
 </div>
 
 
-<br>
+<table>
 
+<tr>
 
-<table class="border">
-
-<tr class="center">
-
-<th class="border">NO</th>
-<th class="border">KIT</th>
-<th class="border">STATUS</th>
-<th class="border">SERIAL NUMBER</th>
-<th class="border">LOKASI</th>
-<th class="border">DIVISI</th>
+<th>No</th>
+<th>Serial Number</th>
+<th>Dish</th>
+<th>Router</th>
+<th>Kabel</th>
+<th>Status</th>
 
 </tr>
 
 
-
-@foreach($bast->lampirans as $no=>$lampiran)
+@foreach($bast->lampirans as $i => $lampiran)
 
 <tr>
 
-<td class="border center">
-{{ $no+1 }}
+<td>
+{{ $i+1 }}
 </td>
 
-<td class="border">
-{{ $lampiran->starlink->kit_name }}
+<td>
+{{ $lampiran->serial_number }}
 </td>
 
-<td class="border">
-{{ $lampiran->starlink->status }}
+<td>
+{{ $lampiran->dish }}
 </td>
 
-<td class="border">
-{{ $lampiran->starlink->serial_number }}
+<td>
+{{ $lampiran->router }}
 </td>
 
-<td class="border">
-{{ $lampiran->starlink->location }}
+<td>
+{{ $lampiran->kabel }}
 </td>
 
-<td class="border">
-{{ $lampiran->starlink->division }}
+<td>
+{{ $lampiran->status }}
 </td>
 
 </tr>
@@ -351,21 +402,6 @@ LAMPIRAN PERANGKAT STARLINK
 
 
 
-<div class="footer">
-
-{{ $bast->no_bast }}
-
-</div>
-
-
-
-<div class="watermark">
-
-FTG
-
-</div>
-
-
-
 </body>
+
 </html>

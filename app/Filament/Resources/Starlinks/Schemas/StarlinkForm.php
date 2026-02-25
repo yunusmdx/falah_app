@@ -58,6 +58,10 @@ class StarlinkForm
                         ->label('Divisi Starlink')
                         ->maxLength(100)
                         ->required(),
+                
+                TextInput::make('mikrotik')
+                        ->label('Mikrotik')
+                        ->maxLength(100),                       
 
                 Textarea::make('note')
                         ->label('Note')

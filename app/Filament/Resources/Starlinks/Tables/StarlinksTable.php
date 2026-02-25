@@ -34,8 +34,8 @@ class StarlinksTable
             
             ->columns([
 
-                    // TextColumn::make('id')
-                    // ->label('No.'),
+                    TextColumn::make('id')
+                    ->label('Nomor'),
                     
                     TextColumn::make('kit_name')
                     ->label('KIT Starlink')
@@ -82,6 +82,11 @@ class StarlinksTable
 
                     TextColumn::make('router_id')
                     ->label('ID Router')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                    TextColumn::make('mikrotik')
+                    ->label('Mikrotik')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
