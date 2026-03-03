@@ -69,6 +69,11 @@ class StarlinksTable
                     ->label('Divisi')
                     ->searchable()
                     ->toggleable(),
+
+                     TextColumn::make('generation')
+                    ->label('Generasi')
+                    ->searchable()
+                    ->toggleable(),
                     
                     TextColumn::make('serial_number')
                     ->label('Serial Number')

@@ -17,6 +17,7 @@ class Starlink extends Model
         'note',
         'division',
         'mikrotik',
+        'generation',
     ];
 
     public function payments()

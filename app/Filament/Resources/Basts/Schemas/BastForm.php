@@ -12,7 +12,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Actions\Action;
-use Filament\Forms\Components\Actions;
+use Filament\Forms\Components\Actions\Action as FormAction;
 
 
 class BastForm
@@ -104,20 +104,32 @@ class BastForm
                     ->hiddenLabel()
                     ->reorderable(false)
                     ->defaultItems(1)
-                    ->addActionLabel('+ Tambah KIT Starlink')
-                    ->itemLabel(fn () => null)
-                    ->collapsible(false)
+                    ->addable(false) // matikan tombol default repeater
                     ->schema([
+
                         Grid::make(12)
-                        ->schema([
-                            Select::make('starlink_id')
-                                ->hiddenLabel()
-                                ->placeholder('Pilih KIT Starlink')
-                                ->relationship('starlink', 'kit_name')
-                                ->searchable()
-                                ->preload()
-                                ->required()
-                                ->columnSpan(11),
+                            ->schema([
+
+                                Select::make('starlink_id')
+                                    ->hiddenLabel()
+                                    ->placeholder('Pilih KIT Starlink')
+                                    ->relationship('starlink', 'kit_name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->required()
+                                    ->columnSpan(12)
+                                    ->suffixAction(
+                                        Action::make('addItem')
+                                            ->icon('heroicon-o-plus')
+                                            ->tooltip('Tambah KIT Starlink')
+                                            ->action(function ($component) {
+                                                $component
+                                                    ->getContainer()              // grid
+                                                    ->getParentComponent()        // repeater item
+                                                    ->getParentComponent()        // repeater
+                                                    ->addItem();
+                                            })
+                                    ),
 
                         ]),
                     ])
@@ -138,39 +150,39 @@ class BastForm
                 CHECKLIST INFORMASI KIT
                 =====================
                 */
-                Section::make('Informasi KIT Starlink')
-                    ->schema([
-                        CheckboxList::make('keterangan_fields')
-                            ->hiddenLabel()
-                            ->columns(2)
-                            ->options([
-                                'kit_name' => 'KIT Name',
-                                'status' => 'Status',
-                                'serial_number' => 'Serial Number',
-                                'starlink_id' => 'Starlink ID',
-                                'router_id' => 'Router ID',
-                                'location' => 'Lokasi',
-                                'email' => 'Email',
-                                'division' => 'Divisi',
-                            ])
-                            ->default([
-                                'kit_name',
-                                'status',
-                                'serial_number',
-                            ])
-                            ->columnSpanFull(),
-                    ])
-                    ->columnSpanFull(),
+                // Section::make('Informasi KIT Starlink')
+                //     ->schema([
+                //         CheckboxList::make('keterangan_fields')
+                //             ->hiddenLabel()
+                //             ->columns(2)
+                //             ->options([
+                //                 'kit_name' => 'KIT Name',
+                //                 'status' => 'Status',
+                //                 'serial_number' => 'Serial Number',
+                //                 'starlink_id' => 'Starlink ID',
+                //                 'router_id' => 'Router ID',
+                //                 'location' => 'Lokasi',
+                //                 'email' => 'Email',
+                //                 'division' => 'Divisi',
+                //             ])
+                //             ->default([
+                //                 'kit_name',
+                //                 'status',
+                //                 'serial_number',
+                //             ])
+                //             ->columnSpanFull(),
+                //     ])
+                //     ->columnSpanFull(),
 
                 /*
                 =====================
                 KETERANGAN TAMBAHAN
                 =====================
                 */
-                Textarea::make('keterangan')
-                    ->label('Keterangan Tambahan')
-                    ->rows(3)
-                    ->columnSpanFull(),
+            //     Textarea::make('keterangan')
+            //         ->label('Keterangan')
+            //         ->rows(3)
+            //         ->columnSpanFull(),
             ]),
         ]);
     }

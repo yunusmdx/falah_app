@@ -72,73 +72,24 @@ class BastsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-            ])
-
-            
-
-            // ->recordActions([
-            //     Action::make('cetak')
-            //         ->icon(Heroicon::Printer)
-            //         ->iconButton()
-            //         ->tooltip('Cetak')
-            //         ->url(fn ($record) => route('bast.pdf', $record->id))
-            //         // ->url(fn ($record) => route('bast.pdf', $record))
-            //         ->openUrlInNewTab(),
+            ])            
 
             ->recordActions([
-
-            Action::make('print')
+                Action::make('cetak')
+                    // ->icon(Heroicon::Printer)
                     ->icon('heroicon-o-printer')
-                    ->color('success')
                     ->iconButton()
-                    ->modalHeading('Print Preview')
-                    ->modalSubmitAction(false)
-                    ->modalCancelActionLabel('Tutup')
+                    ->color('success')
+                    ->tooltip('Cetak')
+                    ->url(fn ($record) => route('bast.pdf', $record->id))
+                    ->openUrlInNewTab(),
 
-                    ->modalContent(fn ($record) => new HtmlString("
-                    
-                        <iframe
-                            src='" . route('bast.print', $record->id) . "'
-                            width='100%'
-                            height='600px'
-                            id='print-frame'
-                            style='border:none;'>
-                        </iframe>
-
-                        <script>
-                        setTimeout(function(){
-
-                            let iframe = document.getElementById('print-frame');
-
-                            iframe.contentWindow.focus();
-
-                            iframe.contentWindow.print();
-
-                        }, 1000);
-                        </script>
-
-                    ")),
-
-                // Action::make('print')
-                //     ->label('')
-                //     ->icon(Heroicon::OutlinedPrinter)
-                //     ->tooltip('Print')
-                //     ->color('success')
-                //     ->iconButton()
-                //     ->url(fn ($record) => route('bast.pdf', ['bast' => $record->id]))
-                //     ->openUrlInNewTab(),
-
-                // Action::make('download')
-                //     ->icon(Heroicon::ArrowDownTray)
-                //     ->iconButton()
-                //     ->tooltip('Download')
-                //     ->url(fn ($record) => route('bast.pdf', $record).'?download=1'),
-            
                 EditAction::make()
                     ->iconButton()
+                    // ->icon(Heroicon::PencilSquare)
                     ->tooltip('Edit')
                     ->color('gray'),
-
+            
                 // Action::make('delete')
                 //     ->label('Delete')
                 //     ->iconButton()

@@ -5,28 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Bast;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BastController extends Controller
 {
     public function print(Request $request, Bast $bast)
         {
-            $bast->load('lampirans.starlink');
+            $bast->load(['lampirans.starlink']);
 
-                return Pdf::loadView('pdf.bast', compact('bast'))
-                    ->setPaper('A4')
-                    ->stream('BAST-'.$bast->no_bast.'.pdf');
+            $pdf = Pdf::loadView('pdf.bast', compact('bast'))
+                ->setPaper('A4', 'portrait');
 
-                 // jika download
-                if ($request->download)
-                {
-                    return Pdf::loadView('pdf.bast', compact('bast'))
-                        ->setPaper('A4')
-                        ->download('BAST-'.$bast->no_bast.'.pdf');
-                }
+            $cleanNoBast = preg_replace('/[^A-Za-z0-9\-]/', '-', $bast->no_bast);
+            $filename = 'File-' . $cleanNoBast . '.pdf';
 
-                // jika preview / print
-                return $pdf->stream('BAST-' . $bast->no_bast . '.pdf');
+            return $request->boolean('download')
+                ? $pdf->download($filename)
+                : $pdf->stream($filename);
         }
-
 
 }

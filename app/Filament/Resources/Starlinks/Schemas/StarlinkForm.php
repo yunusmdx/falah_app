@@ -17,7 +17,7 @@ class StarlinkForm
                 Select::make('status')
                     ->label('Status Starlink')
                     ->options([
-                        'new' => 'BARU', 
+                        'new' => 'NEW', 
                         'aktif' => 'AKTIF', 
                         'standby' => 'STANDBY',
                         'suspend' => 'SUSPEND',
@@ -30,6 +30,11 @@ class StarlinkForm
                     ->label('KIT Starlink')
                     ->maxLength(100)
                     ->required(),
+
+                TextInput::make('generation')
+                        ->label('Generasi Starlink')
+                        ->maxLength(50)
+                        ->required(),
 
                  TextInput::make('email')
                     ->label('Email')
@@ -61,10 +66,10 @@ class StarlinkForm
                 
                 TextInput::make('mikrotik')
                         ->label('Mikrotik')
-                        ->maxLength(100),                       
+                        ->maxLength(100),
 
-                Textarea::make('note')
-                        ->label('Note')
+                Textarea::make('keterangan')
+                        ->label('Keterangan')
                         ->rows(3)
                         ->columnSpanFull(),               
                 
